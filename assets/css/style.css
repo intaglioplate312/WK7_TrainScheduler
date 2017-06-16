@@ -1,0 +1,285 @@
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 100px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    color: #9c9fa8;
+    line-height: 120%;
+    box-sizing: border-box;
+    background-color: #292d36;
+    letter-spacing: 2px;
+    line-height: 120%;
+}
+
+header {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+nav {
+    float: right;
+    padding-top: 30px;
+}
+
+nav ul {
+    float: right;
+    margin: 0px;
+}
+
+nav ul li {
+    float: right;
+    display: inline;
+    padding-left: 16px;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0px;
+    text-decoration: none;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #777777;
+}
+
+nav ul li a:hover {
+    font-weight: bold;
+    color: #b7b7b7;
+}
+
+
+/*nav ul li a:visited {
+    font-weight: normal;
+    color: #b7b7b7;
+}
+*/
+
+main {
+    margin: auto;
+    width: 90%;
+    overflow: hidden;
+}
+
+section {
+    width: 80%;
+    float: left;
+}
+
+article {
+    border: 1px solid #dddddd;
+    padding: 30px;
+    width: 100%;
+    overflow: hidden;
+    float: left;
+}
+
+aside {
+  
+    width: 30%;
+    padding: 30px 30px;
+    float: left;
+}
+
+.clock {
+    border: 1px solid #ddd;
+    width: 40%;
+    padding: 30px 30px;
+    float: left;
+}
+
+input {
+    width: 100%;
+}
+
+input[type=text] {
+    width: 90%;
+    padding: 10px 10px 10px 20px;
+    margin: 5px 0px 15px 0px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: .85em;
+    background-color: #dcdcdc;
+}
+
+button {
+    background-color: #75767b;
+    border: none;
+    color: white;
+    padding: 10px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 12px 10px;
+    margin: 5px 0px 15px 0px;
+    font-size: .85em;
+}
+
+footer {
+    clear: both;
+    text-align: center;
+    margin-top: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 40px;
+    width: 100%;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+tr th {
+    margin-right: 4px, 
+    font-size: .80em;
+}
+
+
+/* logo*/
+
+h1 {
+
+    font-size: 1.75em;
+    font-weight: bolder;
+    text-align: center;
+    letter-spacing: .75px;
+    color: #ea5541;
+    padding: 30px;
+}
+
+
+
+h2 {
+ 
+    font-size: 1.75em;
+    line-height: 150%;
+    color: #ea5541;
+    font-weight: bold;
+    padding: 30px;
+}
+
+
+/*side bar header*/
+
+h3 {
+ 
+    font-size: 1em;
+}
+
+.displayTrainName {
+    font-size: 1em;
+    background-color: #fbc751;
+    padding: 10px;
+    border: 1px solid #fbc751;
+    border-radius: 0 15px 0 0 ;
+     color: #79663c;
+
+
+}
+.displayTrainDest {
+    font-size: 1em;
+     background-color: #a9cd51;
+         padding: 10px;
+          color: #79663c;
+
+
+}
+.displayTrainFreq {
+    font-size: 1em;
+     background-color: #fbc751;
+     text-align: right;
+    padding: 10px;
+        border: 1px solid #fbc751;
+         border-radius: 0 0 0 15px ;
+         color: #79663c;
+
+}
+
+.displayTrainDept {
+     padding: 10px 5px 5px 10px; 
+
+}
+.displayTrainMinutesTo {
+     padding: 5px 5px 5px 10px;
+
+}
+
+/*gallery labels, contact labels*/
+
+h4 {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+h5 {
+   
+    font-size: 1em;
+    font-style: italic;
+}
+
+
+/* footer*/
+
+h6 {
+   
+    font-size: .75em;
+    letter-spacing: .75px;
+    padding: 30px 0px 30px 0px;
+}
+
+p {
+    
+    font-size: .85em;
+}
+
+.heading {
+    color: #4aaaa5;
+    border-bottom: 2px solid #cccccc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.mast_box {
+    width: 960px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right
+}
+
+.clear {
+    clear: both;
+}

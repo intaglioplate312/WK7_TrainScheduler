@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--meta name=”description” content=”155 characters of message matching text with a call to action goes here”-->
+    <meta nname=”description” content="Northwestern Coding Bootcamp, Week 7 Assignment - Train Scheduler">
+    <!-- Up to 70 Characters of Keyword-relevant text here -->
+    <title>Perdido Station Scheduler</title>
+    <!--Faviocon-->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <!--Myers reset-->
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+    <!-- google fonts
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
+    <!-- Latest compiled and minified CSS
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!-- Optional theme
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
+    <!--Local CSS-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+<header>
+    <h1> Perdido Station Scheduler</h1>
+</header>
+<main>
+     <aside>
+            <form>
+                <label>
+                    <h3>Name your train ...</h3>
+                </label>
+                <input id="trainName" type="text">
+                <label>
+                    <h3>Where are we going too?</h3>
+                </label>
+                <input id="trainDestination" type="text">
+                <label>
+                    <h3>When do we leave?</h3>
+                </label>
+                <input id="trainDeparture" type="text">
+                <label>
+                    <h3>How often do we go?</h3>
+                </label>
+                <input id="trainFrequency" type="text">
+            </form>
+            <button id="newTrain" type="submit"> Send to Wheelhouse</button>
+        </aside>
+        <aside class="clock">
+            <h2 id="realTime"> Clock Goes Here </h2>
+        </aside>
+
+
+        <aside>
+        <h2> Departures </h2>
+        <div id="appendHere">
+            <h4 class="displayTrainName" > Name </h4>
+            <h4 class="displayTrainDest" > Going To </h4>
+            <h4 class="displayTrainFreq" >Every (minutes)</h4>
+            <h3 class="displayTrainDept" > Next One </h3>
+            <h3 class="displayTrainMinutesTo" > Leaving in ...</h3>
+       </div><!-- ends id="appendHere" -->
+    </aside>
+</main>
+
+
+
+
+<footer>
+    <h5> something pithy goes here </h5>
+    <!--iconography-->
+</footer>
+</body>
+
+</html>
