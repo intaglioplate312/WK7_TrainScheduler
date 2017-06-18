@@ -1,75 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--meta name=”description” content=”155 characters of message matching text with a call to action goes here”-->
-    <meta nname=”description” content="Northwestern Coding Bootcamp, Week 7 Assignment - Train Scheduler">
-    <!-- Up to 70 Characters of Keyword-relevant text here -->
-    <title>Perdido Station Scheduler</title>
-    <!--Faviocon-->
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <!--Myers reset-->
+    <meta charset="UTF-8">
+    <title>Train</title>
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
-    <!-- google fonts
-    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">-->
-    <!-- Latest compiled and minified CSS
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
-    <!-- Optional theme
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
-    <!--Local CSS-->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
-<header>
-    <h1> Perdido Station Scheduler</h1>
-</header>
-<main>
-     <aside>
-            <form>
-                <label>
-                    <h3>Name your train ...</h3>
-                </label>
-                <input id="trainName" type="text">
-                <label>
-                    <h3>Where are we going too?</h3>
-                </label>
-                <input id="trainDestination" type="text">
-                <label>
-                    <h3>When do we leave?</h3>
-                </label>
-                <input id="trainDeparture" type="text">
-                <label>
-                    <h3>How often do we go?</h3>
-                </label>
-                <input id="trainFrequency" type="text">
-            </form>
-            <button id="newTrain" type="submit"> Send to Wheelhouse</button>
-        </aside>
-        <aside class="clock">
-            <h2 id="realTime"> Clock Goes Here </h2>
-        </aside>
 
-
-        <aside>
-        <h2> Departures </h2>
-        <div id="appendHere">
-            <h4 class="displayTrainName" > Name </h4>
-            <h4 class="displayTrainDest" > Going To </h4>
-            <h4 class="displayTrainFreq" >Every (minutes)</h4>
-            <h3 class="displayTrainDept" > Next One </h3>
-            <h3 class="displayTrainMinutesTo" > Leaving in ...</h3>
-       </div><!-- ends id="appendHere" -->
+<body>
+    <aside>
+        <h2>Train</h2>
+        <label for="name-input">Name Your Train </label>
+        <input class="form-control" id="name-input" type="text">
+        <label for="destination-input">Where Would You Like to Go?</label>
+        <input class="form-control" id="destination-input" type="text">
+        <label for="start-input">When Would You Like to Leave?</label>
+        <input class="form-control" id="start-input" type="number">
+        <label for="frequency-input">How Often Does this Train Run? </label>
+        <input class="form-control" id="frequency-input" type="number">
+        <button class="btn btn-default" id="addTrain" type="submit">Submit</button>
     </aside>
-</main>
-
-
-
-
-<footer>
-    <h5> something pithy goes here </h5>
-    <!--iconography-->
-</footer>
+    <aside class="clock">
+        <h1>  </h1>
+    </aside>
+    <!-- Wells for displaying all users -->
+    </aside>
+    <!-- Sign-up Form (note the various input "types")-->
+    <aside>
+        <h2 class="panel-title">Schedules</h2>
+        <div id="trainList"></div>
+    </aside>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <script src="assets/javascript/javascript.js"></script>
 </body>
 
 </html>
