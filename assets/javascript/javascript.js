@@ -54,22 +54,23 @@ $("#addTrain").on("click", function(event) {
 });
 
 // update/snapshot function
-dataRef.ref().on("child_added", function(childSnapshot) {
+dataRef.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
     //waited for Panotop video, but never uploaded
     //timer differentials ( not ready for prime time!!)
 
     console.log(childSnapshot.val());
 
-    var mfrequency = childSnapshot.val().frequency
-
-    var nextTrain = childSnapshot.val().start
+    var trainName = childSnapshot.val().name;
+    var trainDest = childSnapshot.val().destination;
+    var trainfrequency = childSnapshot.val().frequency;
+    var nextTrain = childSnapshot.val().start;
 
     var timeDifference = moment().diff(moment.unix(nextTrain), "minutes");
 
-    var remainingTime = moment().diff(moment.unix(nextTrain), "minutes") % mfrequency;
+    var remainingTime = moment().diff(moment.unix(nextTrain), "minutes") % trainfrequency;
 
-    var timeMinutes = mfrequency - remainingTime;
+    var timeMinutes = trainfrequency - remainingTime;
 
     var arrivalTime = moment().add(timeMinutes, "m").format("hh:mm A");
     
@@ -91,9 +92,9 @@ dataRef.ref().on("child_added", function(childSnapshot) {
     // display-trainDestination
     // display-trainDeparture
     // display-trainFrequency
-    $("#trainList").append("<div class='well'><div id='name'> " + childSnapshot.val().name +
-        " </div><div id='destination'> " + "Destination " + childSnapshot.val().destination +
-        " </div><div id='frequency'> " + "runs every " + childSnapshot.val().frequency + " minutes" +
+    $("#trainList").append("<div class='well'><div id='name'> " + trainName +
+        " </div><div id='destination'> " + "Destination " + trainDest +
+        " </div><div id='frequency'> " + "runs every " + trainfrequency + " minutes" +
         " </div><div id='start'> " + "Arriving in  " + timeMinutes + " minutes" +
         " </div><div id='dateAdded'> " + "At  " + arrivalTime + " </div></div>");
 
@@ -102,7 +103,7 @@ dataRef.ref().on("child_added", function(childSnapshot) {
     console.log("Errors handled: " + errorObject.code);
 });
 
-dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(lastEmpSnapshot) {
     // Change the HTML to reflect
     $("#name-display").html(snapshot.val().name);
     $("#destination-display").html(snapshot.val().destination);
