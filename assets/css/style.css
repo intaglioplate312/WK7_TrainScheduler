@@ -84,11 +84,76 @@ aside {
     float: left;
 }
 
-.clock {
+.time {
     border: 1px solid #ddd;
     width: 40%;
     padding: 30px 30px;
     float: left;
+}
+
+.main {
+    display: flex;
+    padding: 2em;
+    height: 90vh;
+    justify-content: center;
+    align-items: middle;
+}
+
+.clockbox, #clock {
+    width: 100%;
+}
+
+/* Clock styles */
+.circle {
+    fill: none;
+    stroke: #5AB7A2;
+    stroke-width: 9;
+    stroke-miterlimit: 10;
+}
+
+.mid-circle {
+    fill: #EA5541;
+}
+.hour-marks {
+    fill: none;
+    stroke: #AACE50;
+    stroke-width: 9;
+    stroke-miterlimit: 10;
+}
+
+.hour-arm {
+    fill: none;
+    stroke: #AACE50;
+    stroke-width: 17;
+    stroke-miterlimit: 10;
+}
+
+.minute-arm {
+    fill: none;
+    stroke: #AACE50;
+    stroke-width: 11;
+    stroke-miterlimit: 10;
+}
+
+.second-arm {
+    fill: none;
+    stroke: #EA5541;
+    stroke-width: 4;
+    stroke-miterlimit: 10;
+}
+
+/* Transparent box ensuring arms center properly. */
+.sizing-box {
+    fill: none;
+}
+
+/* Make all arms rotate around the same center point. */
+/* Optional: Use transition for animation. */
+#hour,
+#minute,
+#second {
+    transform-origin: 300px 300px;
+    transition: transform .5s ease-in-out;
 }
 
 input {
@@ -121,13 +186,7 @@ button {
     border-radius: 5px;
 }
 
-textarea {
-    width: 100%;
-    border: 1px solid #ccc;
-    padding: 12px 10px;
-    margin: 5px 0px 15px 0px;
-    font-size: .85em;
-}
+
 
 footer {
     clear: both;
@@ -142,14 +201,6 @@ footer {
     left: 0;
     bottom: 0;
     width: 100%;
-}
-
-table {
-    width: 100%;
-}
-
-tr th {
-    margin-right: 4px, font-size: .80em;
 }
 
 
@@ -241,34 +292,3 @@ p {
     font-size: .85em;
 }
 
-.heading {
-    color: #4aaaa5;
-    border-bottom: 2px solid #cccccc;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-}
-
-.mast_box {
-    width: 960px;
-    margin-right: auto;
-    margin-left: auto;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-}
-
-.right {
-    float: right;
-}
-
-.left {
-    float: left;
-}
-
-.right {
-    float: right
-}
-
-.clear {
-    clear: both;
-}
