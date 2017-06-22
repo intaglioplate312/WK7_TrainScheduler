@@ -44,6 +44,7 @@ $("#addTrain").on("click", function(event) {
         alert("Please enter a Train Destination!");
         return false;
     }
+    //not working 
     if (start.length === 4) {
         alert("Please enter a First Arrival Time!");
         return false;
