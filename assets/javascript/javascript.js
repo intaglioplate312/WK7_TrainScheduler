@@ -17,7 +17,7 @@ var dataRef = firebase.database();
 // Initial Values
 var name = "";
 var destination = "";
-var start = 0;
+var start = "";
 var frequency = "";
 
 
@@ -32,8 +32,27 @@ $("#addTrain").on("click", function(event) {
     // input-trainFrequency
     name = $("#name-input").val().trim();
     destination = $("#destination-input").val().trim();
-    start = moment($("#start-input").val().trim(), "HH:mm").subtract(10, "years").format("X");
     frequency = $("#frequency-input").val().trim();
+    start = $("#start-input").val().trim();
+
+
+    if (name == "") {
+        alert("Please enter a Train Name!");
+        return false;
+    }
+    if (destination == "") {
+        alert("Please enter a Train Destination!");
+        return false;
+    }
+    if (start.length === 4) {
+        alert("Please enter a First Arrival Time!");
+        return false;
+    }
+    if (frequency == "" || frequency < 1) {
+        alert("Please enter an arrival frequency (in minutes)!" + "\n" + "It must be an integer greater than zero.");
+        return false;
+    }
+
 
     // send to database == push
     dataRef.ref().push({
@@ -42,8 +61,10 @@ $("#addTrain").on("click", function(event) {
         destination: destination,
         start: start,
         frequency: frequency,
-        dateAdded: firebase.database.ServerValue.TIMESTAMP
+
     });
+
+
 
     //clear inputs
     $("#name-input").val("");
@@ -54,11 +75,10 @@ $("#addTrain").on("click", function(event) {
 });
 
 // update/snapshot function
-dataRef.ref().on("child_added", function(childSnapshot, prevChildKey) {
+dataRef.ref().on("child_added", function(childSnapshot) {
 
     //waited for Panotop video, but never uploaded
     //timer differentials ( not ready for prime time!!)
-
     console.log(childSnapshot.val());
 
     var trainName = childSnapshot.val().name;
@@ -66,26 +86,26 @@ dataRef.ref().on("child_added", function(childSnapshot, prevChildKey) {
     var trainfrequency = childSnapshot.val().frequency;
     var nextTrain = childSnapshot.val().start;
 
-    var timeDifference = moment().diff(moment.unix(nextTrain), "minutes");
+    // convert train time
+    var nextTrainConverted = moment(nextTrain, "HH:mm").subtract(1, "years");
 
-    var remainingTime = moment().diff(moment.unix(nextTrain), "minutes") % trainfrequency;
+    // current time
+    var currentTime = moment();
 
+    // time dfference
+    var timeDifference = moment().diff(moment(nextTrainConverted), "minutes");
+
+    // time between
+    //var remainingTime = moment().diff(moment.unix(nextTrain), "minutes") % trainfrequency;
+    var remainingTime = timeDifference % trainfrequency;
+
+    // minutes to next train
     var timeMinutes = trainfrequency - remainingTime;
 
-    var arrivalTime = moment().add(timeMinutes, "m").format("hh:mm A");
-    
-    console.log(frequency)
-    console.log(nextTrain)
-    console.log(timeDifference)
-    console.log(remainingTime)
-    console.log(moment().format("hh:mm A"))
-    console.log(timeDifference);
-    console.log(moment().format("X"))
-    console.log(remainingTime)
-    console.log(timeMinutes)
-    console.log(moment().format("hh:mm A"))
-    console.log(arrivalTime);
-    console.log(moment().format("X"))
+    // next train arriving
+    var arrivalTime = moment().add(timeMinutes, "minutes");
+
+
 
 
     // display-trainName
@@ -96,30 +116,25 @@ dataRef.ref().on("child_added", function(childSnapshot, prevChildKey) {
         " </div><div id='destination'> " + "Destination " + trainDest +
         " </div><div id='frequency'> " + "runs every " + trainfrequency + " minutes" +
         " </div><div id='start'> " + "Arriving in  " + timeMinutes + " minutes" +
-        " </div><div id='dateAdded'> " + "At  " + arrivalTime + " </div></div>");
+        " </div><div id='dateAdded'> " + "At  " + moment(arrivalTime).format("hh:mm a") + " </div></div>");
+
+    //" </div><div id='dateAdded'> " + "At  " + arrivalTime + " </div></div>");
 
     // Handle the errors
 }, function(errorObject) {
     console.log("Errors handled: " + errorObject.code);
 });
 
-dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(lastEmpSnapshot) {
-    // Change the HTML to reflect
-    $("#name-display").html(snapshot.val().name);
-    $("#destination-display").html(snapshot.val().destination);
-    $("#start-display").html(snapshot.val().start);
-    $("#frequency-display").html(snapshot.val().frequency);
+// dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(lastEmpSnapshot) {
+//     // Change the HTML to reflect
+//     $("#name-display").html(snapshot.val().name);
+//     $("#destination-display").html(snapshot.val().destination);
+//     $("#start-display").html(snapshot.val().start);
+//     $("#frequency-display").html(snapshot.val().frequency);
 
-});
+// });
 
-//set current time if analog clock wont work
-// function displayTime() {
-//     //var time = moment().format('hh:mm:ss a');
-//     var timeNow = moment().format('h:mm:ss a');
-//     $('.time').html("Apparently it's:  " + timeNow);
-//     setTimeout(displayTime, 1000);
-// };
-//  displayTime();
+
 
 const HOURHAND = document.querySelector("#hour");
 const MINUTEHAND = document.querySelector("#minute");
@@ -132,15 +147,15 @@ let min = date.getMinutes();
 let sec = date.getSeconds();
 console.log("Hour: " + hr + " Minute: " + min + " Second: " + sec);
 
-let hrPosition = (hr*360/12)+(min*(360/60)/12);
-let minPosition = (min*360/60)+(sec*(360/60)/60);
-let secPosition = sec*360/60;
+let hrPosition = (hr * 360 / 12) + (min * (360 / 60) / 12);
+let minPosition = (min * 360 / 60) + (sec * (360 / 60) / 60);
+let secPosition = sec * 360 / 60;
 
 function runTheClock() {
 
-    hrPosition = hrPosition+(3/360);
-    minPosition = minPosition+(6/60);
-    secPosition = secPosition+6;
+    hrPosition = hrPosition + (3 / 360);
+    minPosition = minPosition + (6 / 60);
+    secPosition = secPosition + 6;
 
     HOURHAND.style.transform = "rotate(" + hrPosition + "deg)";
     MINUTEHAND.style.transform = "rotate(" + minPosition + "deg)";
@@ -149,4 +164,3 @@ function runTheClock() {
 }
 
 var interval = setInterval(runTheClock, 1000);
-
