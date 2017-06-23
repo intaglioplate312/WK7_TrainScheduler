@@ -1,8 +1,3 @@
-html {
-    position: relative;
-    min-height: 100%;
-}
-
 body {
     margin: 0 0 100px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -14,74 +9,14 @@ body {
     line-height: 120%;
 }
 
-header {
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 40px;
-    overflow: hidden;
+.jumbotron {
+     background-color: #292d36;
 }
 
-nav {
-    float: right;
-    padding-top: 30px;
-}
-
-nav ul {
-    float: right;
-    margin: 0px;
-}
-
-nav ul li {
-    float: right;
-    display: inline;
-    padding-left: 16px;
-    font-size: 1em;
-    font-weight: normal;
-    margin: 0px;
-    text-decoration: none;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #777777;
-}
-
-nav ul li a:hover {
+.clock-display {
+    font-size: 20px;
     font-weight: bold;
-    color: #b7b7b7;
-}
-
-
-/*nav ul li a:visited {
-    font-weight: normal;
-    color: #b7b7b7;
-}
-*/
-
-main {
-    margin: auto;
-    width: 90%;
-    overflow: hidden;
-}
-
-section {
-    width: 80%;
-    float: left;
-}
-
-article {
-    border: 1px solid #dddddd;
-    padding: 30px;
-    width: 100%;
-    overflow: hidden;
-    float: left;
-}
-
-aside {
-    width: 30%;
-    padding: 30px 30px;
-    float: left;
+    color: yellow;
 }
 
 .time {
@@ -99,11 +34,14 @@ aside {
     align-items: middle;
 }
 
-.clockbox, #clock {
+.clockbox,
+#clock {
     width: 100%;
 }
 
+
 /* Clock styles */
+
 .circle {
     fill: none;
     stroke: #5AB7A2;
@@ -114,6 +52,7 @@ aside {
 .mid-circle {
     fill: #EA5541;
 }
+
 .hour-marks {
     fill: none;
     stroke: #AACE50;
@@ -142,65 +81,24 @@ aside {
     stroke-miterlimit: 10;
 }
 
+
 /* Transparent box ensuring arms center properly. */
+
 .sizing-box {
     fill: none;
 }
 
+
 /* Make all arms rotate around the same center point. */
+
+
 /* Optional: Use transition for animation. */
+
 #hour,
 #minute,
 #second {
     transform-origin: 300px 300px;
     transition: transform .5s ease-in-out;
-}
-
-input {
-    width: 100%;
-}
-
-input[type=text],
-[type=number] {
-    width: 90%;
-    padding: 10px 10px 10px 20px;
-    margin: 5px 0px 15px 0px;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: .85em;
-    background-color: #dcdcdc;
-}
-
-button {
-    background-color: #75767b;
-    border: none;
-    color: white;
-    padding: 10px;
-    margin: 4px 2px;
-    cursor: pointer;
-    font-size: 1em;
-    width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-
-
-footer {
-    clear: both;
-    text-align: center;
-    margin-top: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 40px;
-    width: 100%;
-    color: #fff;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
 }
 
 
@@ -223,51 +121,9 @@ h2 {
     padding: 30px;
 }
 
-
-/*side bar header*/
-
 h3 {
     font-size: 1em;
 }
-
-#name {
-    font-size: 1em;
-    background-color: #fbc751;
-    padding: 10px;
-    border: 1px solid #fbc751;
-    border-radius: 0 15px 0 0;
-    color: #79663c;
-    margin-top: 30px;
-}
-
-#destination {
-    font-size: 1em;
-    background-color: #a9cd51;
-    padding: 10px;
-    color: #79663c;
-}
-
-#frequency {
-    font-size: 1em;
-    background-color: #fbc751;
-    text-align: right;
-    padding: 10px;
-    border: 1px solid #fbc751;
-    border-radius: 0 0 0 15px;
-    color: #79663c;
-}
-
-#start {
-    padding: 10px 5px 5px 10px;
-}
-
-#dateAdded {
-    padding: 5px 5px 5px 10px;
-    margin-bottom: 15px;
-}
-
-
-/*gallery labels, contact labels*/
 
 h4 {
     font-size: 1em;
@@ -292,3 +148,10 @@ p {
     font-size: .85em;
 }
 
+th {
+    text-align: left;
+}
+
+td {
+    text-align: left;
+}

@@ -1,4 +1,4 @@
-// Initialize Firebase
+// FIREBASE 
 var config = {
     apiKey: "AIzaSyBlaf1ST7wUoySRa8Wf6kKP8kf53G2r2KY",
     authDomain: "first-project-ccf72.firebaseapp.com",
@@ -8,34 +8,31 @@ var config = {
     messagingSenderId: "850034355384"
 };
 
-// config firebase
-// == firebase.database
 firebase.initializeApp(config);
 
-var dataRef = firebase.database();
+var database = firebase.database();
+var data;
 
-// Initial Values
-var name = "";
-var destination = "";
-var start = "";
-var frequency = "";
+// Firebase Pull New Data 
+database.ref().on("value", function(snapshot) {
 
+    // Collect Firebase Data 
+    data = snapshot.val();
 
-// // onclick function to send grab data from form
-$("#addTrain").on("click", function(event) {
-    event.preventDefault();
+    // Update DOM 
+    refreshTable();
+});
 
+// Submit 
+$("#addTrain").on('click', function() {
 
-    // input-trainName
-    // input-trainDestination
-    // input-trainDeparture
-    // input-trainFrequency
-    name = $("#name-input").val().trim();
-    destination = $("#destination-input").val().trim();
-    frequency = $("#frequency-input").val().trim();
-    start = $("#start-input").val().trim();
+    // COLLECT VALUES to HTML 
+    var name = $("#name-input").val().trim();
+    var destination = $("#destination-input").val().trim();
+    var trainFirstArrivalTime = $("#first-input").val().trim();
+    var trainFreq = $("#frequency-input").val().trim();
 
-
+    // Alerts
     if (name == "") {
         alert("Please enter a Train Name!");
         return false;
@@ -44,98 +41,140 @@ $("#addTrain").on("click", function(event) {
         alert("Please enter a Train Destination!");
         return false;
     }
-    //not working 
-    if (start.length === 4) {
+    if (trainFirstArrivalTime == "") {
         alert("Please enter a First Arrival Time!");
         return false;
     }
-    if (frequency == "" || frequency < 1) {
-        alert("Please enter an arrival frequency (in minutes)!" + "\n" + "It must be an integer greater than zero.");
+    if (trainFreq == "" || trainFreq < 1) {
+        alert("Please enter an arrival frequency (in minutes) greater than zero.");
         return false;
     }
 
 
-    // send to database == push
-    dataRef.ref().push({
+    // Time Variables 
+    var today = new Date();
+    var thisMonth = today.getMonth() + 1;
+    var thisDate = today.getDate();
+    var thisYear = today.getFullYear();
 
+    //Redueced to Excel spreadsheet tricksDATE STRING 
+    var dateString = "";
+    var dateString = dateString.concat(thisMonth, "/", thisDate, "/", thisYear);
+
+    // DATE & TIME STORAGE 
+    var trainFirstArrival = dateString.concat(" ", trainFirstArrivalTime);
+
+    // Push to firebase 
+    database.ref().push({
         name: name,
         destination: destination,
-        start: start,
-        frequency: frequency,
-
+        firstArrival: trainFirstArrival,
+        frequency: trainFreq
     });
 
-
-
-    //clear inputs
+    // Reset Inputs 
     $("#name-input").val("");
     $("#destination-input").val("");
-    $("#start-input").val("");
+    $("#first-input").val("");
     $("#frequency-input").val("");
+
+    // Prevent Default Refresh 
     return false;
 });
 
-// update/snapshot function
-dataRef.ref().on("child_added", function(childSnapshot) {
+// Update Table
+function refreshTable() {
 
-    //waited for Panotop video, but never uploaded
-    //timer differentials ( not ready for prime time!!)
-    console.log(childSnapshot.val());
+    // Clear Old Data 
+    $('.table-body-row').empty();
 
-    var trainName = childSnapshot.val().name;
-    var trainDest = childSnapshot.val().destination;
-    var trainfrequency = childSnapshot.val().frequency;
-    var nextTrain = childSnapshot.val().start;
+    // FIREBASE to HTML 
+    $.each(data, function(key, value) {
 
-    // convert train time
-    var nextTrainConverted = moment(nextTrain, "HH:mm").subtract(1, "years");
+        //Start of Moment.js Calculations
+        var name = value.name;
+        var destination = value.destination;
+        var trainFreq = value.frequency;
+        var trainFirstArrivalTime = value.firstArrival;
+        var trainNextDeparture;
+        var trainMinutesAway;
 
-    // current time
-    var currentTime = moment();
+        //Convert
+        var convertedDate = moment(new Date(trainFirstArrivalTime));
 
-    // time dfference
-    var timeDifference = moment().diff(moment(nextTrainConverted), "minutes");
+        //Minutes away
+        var minuteDiffFirstArrivalToNow = moment(convertedDate).diff(moment(), "minutes") * (-1);
 
-    // time between
-    //var remainingTime = moment().diff(moment.unix(nextTrain), "minutes") % trainfrequency;
-    var remainingTime = timeDifference % trainfrequency;
+        // Look for New Train Times 
+        if (minuteDiffFirstArrivalToNow <= 0) {
 
-    // minutes to next train
-    var timeMinutes = trainfrequency - remainingTime;
+            // Current Departure 
+            trainMinutesAway = moment(convertedDate).diff(moment(), "minutes");
 
-    // next train arriving
-    var arrivalTime = moment().add(timeMinutes, "minutes");
+            // Next Depature Time 
+            trainNextDepartureDate = convertedDate;
+        } else {
 
+            // Next Train Departure 
+            trainMinutesAway = trainFreq - (minuteDiffFirstArrivalToNow % trainFreq);
 
+            // Next Departure Time 
+            var trainNextDepartureDate = moment().add(trainMinutesAway, 'minutes');
+        }
 
+        // Formattin
+        trainNextDeparture = trainNextDepartureDate.format("hh:mm A");
 
-    // display-trainName
-    // display-trainDestination
-    // display-trainDeparture
-    // display-trainFrequency
-    $("#trainList").append("<div class='well'><div id='name'> " + trainName +
-        " </div><div id='destination'> " + "Destination " + trainDest +
-        " </div><div id='frequency'> " + "runs every " + trainfrequency + " minutes" +
-        " </div><div id='start'> " + "Arriving in  " + timeMinutes + " minutes" +
-        " </div><div id='dateAdded'> " + "At  " + moment(arrivalTime).format("hh:mm a") + " </div></div>");
+        // APPEND HTML w/ FIREBASE 
+        var newRow = $('<tr>');
+        newRow.addClass("table-body-row");
 
-    //" </div><div id='dateAdded'> " + "At  " + arrivalTime + " </div></div>");
+        // NEW DATA from FIREBASE 
+        var nameTd = $('<td>');
+        var destinationTd = $('<td>');
+        var frequencyTd = $('<td>');
+        var nextDepartureTd = $('<td>');
+        var minutesAwayTd = $('<td>');
 
-    // Handle the errors
-}, function(errorObject) {
-    console.log("Errors handled: " + errorObject.code);
-});
+        // Data Text to HTML 
+        nameTd.text(name);
+        destinationTd.text(destination);
+        frequencyTd.text(trainFreq);
+        nextDepartureTd.text(trainNextDeparture);
+        minutesAwayTd.text(trainMinutesAway);
 
-// dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(lastEmpSnapshot) {
-//     // Change the HTML to reflect
-//     $("#name-display").html(snapshot.val().name);
-//     $("#destination-display").html(snapshot.val().destination);
-//     $("#start-display").html(snapshot.val().start);
-//     $("#frequency-display").html(snapshot.val().frequency);
+        // New Row Data Text to HTML 
 
-// });
+        newRow.append(nameTd);
+        newRow.append(destinationTd);
+        newRow.append(frequencyTd);
+        newRow.append(nextDepartureTd);
+        newRow.append(minutesAwayTd);
 
+        // New Row to HTML 
+        $('.table').append(newRow);
 
+    });
+}
+
+// Refresh -- addin extra row??!!
+
+//var counter = setInterval(refreshTable, 60*1000);
+// Update the Current Time every second
+var timeStep = setInterval(currentTime, 1000);
+
+function currentTime() {
+    var timeNow = moment().format("hh:mm:ss A");
+    //$("#current-time").text(timeNow);
+
+    // Refresh the Page every minute, on the minute
+    var secondsNow = moment().format("ss");
+
+    if (secondsNow == "00") {
+        refreshTable();
+    }
+
+}
 
 const HOURHAND = document.querySelector("#hour");
 const MINUTEHAND = document.querySelector("#minute");
@@ -148,15 +187,15 @@ let min = date.getMinutes();
 let sec = date.getSeconds();
 console.log("Hour: " + hr + " Minute: " + min + " Second: " + sec);
 
-let hrPosition = (hr * 360 / 12) + (min * (360 / 60) / 12);
-let minPosition = (min * 360 / 60) + (sec * (360 / 60) / 60);
-let secPosition = sec * 360 / 60;
+let hrPosition = (hr*360/12)+(min*(360/60)/12);
+let minPosition = (min*360/60)+(sec*(360/60)/60);
+let secPosition = sec*360/60;
 
 function runTheClock() {
 
-    hrPosition = hrPosition + (3 / 360);
-    minPosition = minPosition + (6 / 60);
-    secPosition = secPosition + 6;
+    hrPosition = hrPosition+(3/360);
+    minPosition = minPosition+(6/60);
+    secPosition = secPosition+6;
 
     HOURHAND.style.transform = "rotate(" + hrPosition + "deg)";
     MINUTEHAND.style.transform = "rotate(" + minPosition + "deg)";
@@ -165,3 +204,4 @@ function runTheClock() {
 }
 
 var interval = setInterval(runTheClock, 1000);
+
